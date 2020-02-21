@@ -1,0 +1,129 @@
+@import "../report.component.scss";
+// .invoiceNbr {
+//     font-size: 40px;
+//     margin-right: 30px;
+//     margin-top: 30px;
+//     float: right;
+// }
+
+header {
+    text-align: center;
+    top:20pt;
+    position: relative;
+    .content{
+        .logo {
+            
+        }
+        .title {
+            padding-top: 20px;
+            h1{
+                font-size: 20px;
+                font-weight: bold;
+            }
+            p{ 
+                max-width: 90%;
+                margin: 0 auto;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (min-width: 576px) {
+   
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    header {
+        // &:before,
+        // &:after {
+        //     content: " ";
+        //     display: table;
+        // }
+        // &:after {
+        //     clear: both;
+        // }
+        
+        .content{
+            .logo {
+                // float: left;
+            }
+            .title {
+                // position: absolute;
+                // left: 0;
+                // right: 0;
+                // top: 40px;
+                // padding-top: 0px;
+                h1{
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+                p{ 
+                    max-width: 90%;
+                    margin: 0 auto;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    header {
+        .d-print-md-left{
+            position: absolute;
+            text-align: left;
+        }
+    }
+}
+
+
+@media print {
+
+    header {
+        // &:before,
+        // &:after{
+        //     content: " ";
+        //      display: table;
+        // }
+        // &:after {
+        //    clear: both; 
+        // }
+        .d-print-md-left{
+            position: absolute;
+            text-align: left;
+        }
+        .content{
+            .logo {
+                // float: left;
+            }
+            .title {
+                // position: absolute;
+                // left: 0;
+                // right: 0;
+                // top: 30pt;
+                padding-top: 0;
+                h1{
+                    font-size: 12pt;
+                    font-weight: bold;
+                }
+               
+            }
+        }
+         // .invoiceNbr {
+    //     font-size: 30pt;
+    //     margin-right: 30pt;
+    //     margin-top: 30pt;
+    //     float: right;
+    // }
+    }
+
+   
+}

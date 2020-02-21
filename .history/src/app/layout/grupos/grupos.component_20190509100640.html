@@ -1,0 +1,151 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Grupos'" [icon]="'fa fa-tags'"></app-page-header>
+    <div class="forms  addForm" id="FacultadForm" *ngIf="isToAdd || isToUpdate">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <hr class="d-block" />
+                    <h3><i class="fa fa-id-card-o" aria-hidden="true"></i> Descripción</h3>
+                    <hr class="d-block" />
+                    <!-- star Form -->
+                    <form role="form" [formGroup]="grupoForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-book" aria-hidden="true"></i> Código</label>
+                                <input type="text" class="form-control" maxlength="50" id="textCodigo" placeholder="Ejemplo: IS-2018" required formControlName="codigo" />
+                                <div class="invalid-tooltip">
+                                    Por favor digite el Código del Grupo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-book" aria-hidden="true"></i> Nombre<span
+                    class="required">*</span></label>
+                                <input type="text" class="form-control" maxlength="50" id="textNombre" placeholder="Ejemplo: Ingenieria en Sistemas - Ingreso 2018" required formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && g.nombre.errors }" />
+                                <div *ngIf="submitted && g.nombre.errors" class="invalid-feedback">
+                                    <div *ngIf="g.nombre.errors.required">Por favor Digite el Nombre</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Star Row  Información Académica -->
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6 ">
+                                <label class="labelGroup">Carrera</label>
+                                <select class="custom-select" id="textCarrera" formControlName="carreraID">
+                  <option value="" disabled>Seleccione una opción</option>
+                  <ng-container *ngFor="let carrera of carreras">
+                    <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+                  </ng-container>
+                </select>
+                            </div>
+                        </div>
+                        <div class="form-row"></div>
+                        <div class="form-group col-md-12 col-lg-6">
+                            <label class="labelGroup">Año de Ingreso</label>
+                            <select class="custom-select" id="textAnioIngreso" formControlName="periodoID">
+                  <option value="" disabled>Seleccione Periodo de Ingreso</option>
+                  <option value="1">Ingreso 2011</option>
+                  <option value="2">Ingreso 2012</option>
+                  <option value="3">Ingreso 2013</option>
+                  <option value="4">Ingreso 2014</option>
+                  <option value="5">Ingreso 2015</option>
+                  <option value="6">Ingreso 2016</option>
+                  <option value="7">Ingreso 2017</option>
+                  <option value="8">Ingreso 2018</option>
+                  <option value="9">Ingreso 2019</option>
+                </select>
+                        </div>
+                </div>
+                <!-- End Row -->
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="textEstado" formControlName="estado" />
+                            <label class="form-check-label" for="textEstado">¿ Activo ?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2 offset-md-1">
+                        <div class="text-center success-button">
+                            <button type="button" class="btn btn-success" (click)="goBack()">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <div class="text-center success-button">
+                            <button class="btn btn-success" type="submit" [disabled]="facultadForm.pristine">Enviar
+                    Solicitud</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+
+                <!-- <div class="text-left">
+                <a  routerLinkActive="router-link-active" class="btn btn-info">Regresar Atras</a>
+            </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="datatableview" *ngIf="isToList">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr class="d-block" />
+                <h5><i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp;Vista de Áreas</h5>
+                <hr class="d-block" />
+                <table class="table table-striped table-responsive table-hover" [mfData]="facultades" #mf="mfDataTable" [mfRowsOnPage]="5">
+                    <thead>
+                        <tr>
+                            <th style="widows: auto; min-width:145px;">
+                                <span><i class="fa fa-cog" aria-hidden="true"></i> Opciones</span>
+                            </th>
+                            <th style="width: auto">
+                                <mfDefaultSorter by="nombre"><i class="fa fa-sort" aria-hidden="true"></i> Nombre</mfDefaultSorter>
+                            </th>
+                            <th style="width: auto">
+                                <mfDefaultSorter by="descripcion"><i class="fa fa-sort" aria-hidden="true"></i> Descripción
+                                </mfDefaultSorter>
+                            </th>
+                            <th style="width: auto">
+                                <mfDefaultSorter by="coordinador"><i class="fa fa-sort" aria-hidden="true"></i> Coordinador
+                                </mfDefaultSorter>
+                            </th>
+                            <th style="width: auto">
+                                <mfDefaultSorter by="estado"><i class="fa fa-sort" aria-hidden="true"></i> Estado</mfDefaultSorter>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let facultad of mf.data">
+                            <td>
+                                <button type="button" class="btn btn-outline-primary" (click)="addFacultad()"><i class="fa fa-plus"
+                      aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-outline-primary" (click)="updateFacultad(facultad)"><i
+                      class="fa fa-pencil" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-outline-primary" (click)="onDeleted(facultad)"><i
+                      class="fa fa-trash" aria-hidden="true"></i></button>
+                            </td>
+                            <td>{{ facultad.nombre }}</td>
+                            <td>{{ facultad.descripcion }}</td>
+                            <td class="text-right">{{ facultad.coordinador }}</td>
+                            <td>{{ facultad.estado }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

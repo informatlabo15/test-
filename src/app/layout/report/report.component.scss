@@ -1,0 +1,235 @@
+@import "../../../styles/app";
+
+
+body {
+    font-family: 'Segoe UI','Microsoft Sans Serif',sans-serif;
+}
+
+/*
+    These next two styles are apparently the modern way to clear a float. This allows the logo
+    and the word "Invoice" to remain above the From and To sections. Inserting an empty div
+    between them with clear:both also works but is bad style.
+    Reference:
+    http://stackoverflow.com/questions/490184/what-is-the-best-way-to-clear-the-css-style-float
+*/
+
+.content-body-report {
+    margin-top:40pt;
+    max-width: 100%;
+    overflow-x: auto;
+    
+    .underline {
+        border-bottom: 1px solid #000;
+    }
+    .buttons-fixed{
+        position: fixed;
+        bottom: 30%;
+        left: 5;
+        z-index: 9999;
+    }
+    table {
+        tr td{
+            border: 1px solid #000;
+        }
+        tr.header{
+           td{
+               font-weight: bold;
+               p.text-nowrap{
+                margin-left: 1.2rem;
+                margin-bottom: 0.5rem;
+               }
+
+           }
+        }
+        .row-content {
+            td {
+                &:last-child {
+                    padding-left: 0px;
+                }
+            }
+        }
+    }
+    .row {
+        .bordered{
+            border: 1px solid #000;
+        }
+    }
+}
+
+
+
+.fromto {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e5e5;
+    border-radius: 5px;
+    margin: 20px;
+    min-width: 200px;
+}
+
+.fromtocontent {
+    margin: 10px;
+    margin-right: 15px;
+}
+
+.panel {
+    background-color: #e8e5e5;
+    padding: 7px;
+}
+
+.items {
+    //  clear: both;
+    // display: table;
+    // padding: 20px;
+    padding-top: 20px;
+}
+
+/* Factor out common styles for all of the "col-" classes.*/
+div[class^="col-"] {
+    // display: table-cell;
+    // padding: 7px;
+}
+
+/*for clarity name column styles by the percentage of width */
+.col-1-10 {
+    // width: 10%;
+}
+
+.col-1-52 {
+    // width: 52%;
+}
+
+.row {
+    // display: table-row;
+    // page-break-inside: avoid;
+}
+
+@media (min-width: 576px) {
+
+}
+
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+    .content-body-report {
+        max-width: 100%;
+        // overflow-x: hidden;
+    }
+    
+}
+
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+
+
+@media print {
+    body {
+        font-family: 'Segoe UI','Microsoft Sans Serif',sans-serif;
+    }
+    section.filter{
+        display: none;
+    }
+
+  
+    .invoiceNbr {
+        font-size: 30pt;
+        margin-right: 30pt;
+        margin-top: 30pt;
+        float: right;
+    }
+
+    .logo {
+        // float: left;
+    }
+
+    .from {
+        // float: left;
+    }
+
+    .to {
+        // float: right;
+    }
+
+    .fromto {
+        border-style: solid;
+        border-width: 1pt;
+        border-color: #e8e5e5;
+        border-radius: 5pt;
+        margin: 20pt;
+        min-width: 200pt;
+    }
+
+    .fromtocontent {
+        margin: 10pt;
+        margin-right: 15pt;
+    }
+
+    .panel {
+        background-color: #e8e5e5;
+        padding: 7pt;
+    }
+
+    .items {
+        // clear: both;
+        // display: table;
+        // padding: 20pt;
+        // overflow: hidden;
+    }
+
+    div[class^="col-"] {
+        // display: table-cell;
+        // padding: 7pt;
+    }
+
+    .col-1-10 {
+        // width: 10%;
+    }
+
+    .col-1-52 {
+        // width: 52%;
+    }
+
+    .row {
+        // display: table-row;
+        // page-break-inside: avoid;
+        // page-break-after: avoid;
+        // page-break-before: always;
+    }
+    .content-body-report {
+       
+        .from {
+        }
+        
+        .to {
+        }
+    }
+    .row-brake {
+        // display: table-row;
+        page-break-inside: avoid;
+        page-break-after: always;
+        // page-break-before: always;
+    }
+    .row-brake-before{
+          page-break-before: always;
+    }
+    .table-responsibe{
+        overflow: hidden;
+    }
+    .table{
+        td{
+            padding: 0.25rem;
+        }
+    }
+    .firmas{
+        overflow: hidden;
+    }
+}

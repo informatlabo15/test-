@@ -1,0 +1,47 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Evaluación Estudiante'" [icon]="'fa fa-tags'"></app-page-header>
+    <div class="forms  addForm" id="PlanificacionDetalleForm" *ngIf="isToAdd || isToUpdate">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <form role="form" [formGroup]="planificacionEvaluacionForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <hr class="d-block" />
+                        <h3><i *ngIf="isAsignaturaSelected" class="fa fa-check" aria-hidden="true"></i> Selecciona una Asignatura
+                        </h3>
+                        <hr class="d-block" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <select class="custom-select" id="textAsignaturaID" formControlName="asignatura" (change)="getPlanificacionEstudianteById($event)" [ngClass]="{ 'is-invalid': submitted && p.planificacionID.errors }">
+                  <option value="" disabled>Seleccion la Asignatura</option>
+                  <ng-container *ngFor="let planificacion of planificaciones">
+                    <option value="{{ planificacion.id }}">{{ planificacion.asignatura.nombre  }} -
+                      {{planificacion.grupo.nombre}}</option>
+                  </ng-container>
+                </select>
+                            </div>
+                        </div>
+                        <div class="form-row" *ngIf="planificacionSelected">
+                            <hr class="d-block" />
+                            <h3><i class="fa fa-list" aria-hidden="true"></i> Lista de Estudiantes
+                            </h3>
+                            <hr class="d-block" />
+                            <div class="form-group col-md-12 col-lg-6">
+                                <ng-container *ngFor="let estudiante of planificacionSelected">
+                                    <div class="form-row">
+                                        <div class="col-1 text-center">
+                                            <label class="labelGroup"></label>
+                                        </div>
+                                        <div class="form-group col-2">
+                                            <label class="labelGroup"></label>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

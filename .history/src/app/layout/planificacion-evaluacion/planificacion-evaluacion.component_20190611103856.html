@@ -1,0 +1,28 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Evaluación Estudiante'" [icon]="'fa fa-tags'"></app-page-header>
+    <div class="forms  addForm" id="PlanificacionDetalleForm" *ngIf="isToAdd || isToUpdate">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <hr class="d-block" />
+                    <h3><i *ngIf="isAsignaturaSelected" class="fa fa-check" aria-hidden="true"></i> 1- Selecciona una Asignatura
+                    </h3>
+                    <hr class="d-block" />
+                    <form role="form" [formGroup]="planificacionEvaluacionForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <select class="custom-select" id="textPlanificacionID" formControlName="asignatura" [ngClass]="{ 'is-invalid': submitted && p.planificacionID.errors }">
+                  <option value="" disabled>Seleccion la Asignatura</option>
+                  <ng-container *ngFor="let planificacion of planificaciones">
+                    <option value="{{ planificacion.asignaturaID }}">{{ planificacion.asignatura.nombre  }} - {{planificacion.grupo.nombre}}</option>
+                  </ng-container>
+                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

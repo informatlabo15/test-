@@ -1,0 +1,122 @@
+@import "../../app.component";
+
+#form-register{
+    position: relative;
+    top: 50px;
+    min-width: 250px;
+    padding: 30px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+    z-index: 2;
+    margin-bottom: 100px;
+
+    .form-row{
+        padding: 10px;
+    }
+    .checkInRow{
+        display: flex;
+    }
+
+    .labelGroup{
+        display: block;
+        width: 100%;
+        padding-left: 8px;
+        font-weight: bold;
+        color: $main-color;
+        .alert,span{
+            color: red;
+        }
+    }
+
+    h3{
+        text-align: center;
+        font-size: 18px;
+        color: $main-color;
+        text-transform: uppercase;
+    }
+
+    .help-block{
+        font-size:12px    
+    }
+    .bottom{
+        background-color:rgba(255,255,255,.8);
+        border-top:1px solid #ddd;
+        clear:both;
+        padding:14px;
+    }
+    .back-button{
+        text-align: center;
+        margin-top: 20px;
+        a{
+            color: white;
+        }
+    }
+     .social-buttons{
+        margin:12px 0 ;
+        a{
+            width: 100%;
+        }   
+    }
+     
+    .form-group {
+        margin-bottom: 10px;
+        .btn{
+            float: none;
+            width: 100%;
+        }
+    }
+    .btn-fb{
+        color: #fff;
+        background-color:#3b5998;
+    }
+    .btn-fb:hover{
+        color: #fff;
+        background-color:#496ebc 
+    }
+    .btn-tw{
+        color: #fff;
+        background-color:#55acee;
+    }
+    .btn-tw:hover{
+        color: #fff;
+        background-color:#59b5fa;
+    }
+}	
+
+@media (min-width: 576px) {
+	
+
+}
+ 
+@media (min-width: 768px) {
+	#form-register{
+        position: relative;
+        // left: 0;
+        // right: 0;
+        // margin: 0 auto;
+        // width: 80%;
+        // bottom: 130px;
+        // top: auto;
+        .back-button{
+            text-align: left;
+            margin-top: 20px;
+        }
+    } 
+}
+
+@media (min-width: 992px) {
+	#form-register{
+        
+        h3{
+            text-align: left;
+        }
+
+        top: 50px;
+        // left: auto;
+        // right: 5%;
+        // width: 450px;
+        // top: 130px;
+        // bottom: auto;
+        // margin: 0 auto;
+    } 
+}

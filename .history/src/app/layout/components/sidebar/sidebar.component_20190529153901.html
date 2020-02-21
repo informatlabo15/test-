@@ -1,0 +1,126 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+    <div class="list-group">
+        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+            <span>{{ 'Inicio' | translate }}</span>
+        </a>
+        <a *ngIf="userAdmin" [routerLink]="['/docentes']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-users" aria-hidden="true"></i>&nbsp;
+            <span>{{ 'Docentes' | translate }}</span>
+        </a>
+        <a *ngIf="userAdmin || userCoordinador || userDecano" [routerLink]="['/estudiantes']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;
+            <span>{{ 'Estudiantes' | translate }}</span>
+        </a>
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('pages')">
+                <i class="fa fa-fw fa-wrench"></i>&nbsp;
+                <span>{{ 'Configuracion' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages'">
+                <ul class="submenu">
+                    <li *ngIf="userAdmin">
+                        <a routerLink="/facultades" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Áreas' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="userAdmin || userCoordinador || userDecano" routerLink="/carreras" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Carreras' | translate }}</span>
+                        </a>
+                    </li>
+                    <li *ngIf="userAdmin || userCoordinador">
+                        <a routerLink="/planificacion_coordinador" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Planificacion' | translate }}</span>
+                        </a>
+                    </li>
+                    <li *ngIf="userAdmin">
+                        <a routerLink="/grupos" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-users" aria-hidden="true"></i> &nbsp;
+                            <span>{{ 'Grupos' | translate }}</span>
+                        </a>
+                    </li>
+                    <li *ngIf="userAdmin">
+                        <a routerLink="/signup" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tag" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Usuarios' | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <div class="nested-menu" *ngIf="userAdmin">
+            <a class="list-group-item" (click)="addExpandClass('institucion')">
+                <i class="fa fa-fw fa-wrench"></i>&nbsp;
+                <span>{{ 'Institución' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'institucion'">
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/salones" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Salones' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/horarios" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Horarios' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/planificaciones" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Planificaciones' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/evaluaciones" [routerLinkActive]="['router-link-active']">
+                            <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;
+                            <span>{{ 'Evaluaciones' | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+        <div class="header-fields">
+
+            <div class="nested-menu">
+                <a class="list-group-item" (click)="addExpandClass('profile')">
+                    <span><i class="fa fa-user"></i>&nbsp; {{ this.userName }}</span>
+                </a>
+                <li class="nested" [class.expand]="showMenu === 'profile'">
+                    <ul class="submenu">
+                        <!-- <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</span>
+                            </a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</span>
+                            </a>
+                        </li> -->
+                        <li>
+                            <a [routerLink]="['/login']" (click)="onLoggedout()">
+                                <span><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+        <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
+        <span>{{ 'Mostrar Opciones' | translate }}</span>
+    </div>
+</nav>

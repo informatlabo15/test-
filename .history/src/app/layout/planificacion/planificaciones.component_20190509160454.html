@@ -1,0 +1,185 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Planificaciones'" [icon]="'fa fa-tags'"></app-page-header>
+    <div class="forms  addForm" id="FacultadForm" *ngIf="isToAdd || isToUpdate">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <hr class="d-block" />
+                    <h3><i class="fa fa-id-card-o" aria-hidden="true"></i> Descripción</h3>
+                    <hr class="d-block" />
+                    <!-- star Form -->
+                    <form role="form" [formGroup]="planificacionForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-book" aria-hidden="true"></i> Nombre<span
+                    class="required">*</span></label>
+                                <input type="text" class="form-control" maxlength="50" id="textNombre" placeholder="Ejemplo:Año/Periodo Escolar 2018" required formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && p.nombre.errors }" />
+                                <div *ngIf="submitted && p.nombre.errors" class="invalid-feedback">
+                                    <div *ngIf="p.nombre.errors.required">Por favor Digite el Nombre</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup">Año en Curso</label>
+                                <select class="custom-select" id="textAnioIngreso" formControlName="periodoID" [ngClass]="{ 'is-invalid': submitted && p.periodoID.errors }">
+                  <option value="" disabled>Seleccione el Año en Curso</option>
+                  <option value="1">2011</option>
+                  <option value="2">2012</option>
+                  <option value="3">2013</option>
+                  <option value="4">2014</option>
+                  <option value="5">2015</option>
+                  <option value="6">2016</option>
+                  <option value="7">2017</option>
+                  <option value="8">2018</option>
+                  <option value="9">2019</option>
+                </select>
+                                <div *ngIf="submitted && p.periodoID.errors" class="invalid-feedback">
+                                    <div *ngIf="p.periodoID.errors.required">Por favor Seleccione el Año</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup">Cuatrimestre</label>
+                                <select class="custom-select" id="textAnioIngreso" formControlName="subPeriodoID" [ngClass]="{ 'is-invalid': submitted && p.periodoID.errors }">
+                  <option value="" disabled></option>
+                  <option value="1">I Cuatrimestre</option>
+                  <option value="2">II Cuatrimestre</option>
+                  <option value="3">III Cuatrimestre</option>
+                </select>
+                                <div *ngIf="submitted && p.subPeriodoID.errors" class="invalid-feedback">
+                                    <div *ngIf="p.subPeriodoID.errors.required">Por favor Seleccione el Cuatrimestre</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-book" aria-hidden="true"></i> Fecha de Inicio</label>
+                                <input type="date" class="form-control" id="textNombre" placeholder="Fecha de Inicio" formControlName="fechaInicio" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-book" aria-hidden="true"></i> Fecha de Fin</label>
+                                <input type="date" class="form-control" id="textNombre" placeholder="Fecha de Inicio" formControlName="fechaFin" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="textEstado" formControlName="estado" />
+                                    <label class="form-check-label" for="textEstado">¿ Activo ?</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-2 offset-md-1">
+                                <div class="text-center success-button">
+                                    <button type="button" class="btn btn-success" (click)="goBack()">Cancelar</button>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="text-center success-button">
+                                    <button class="btn btn-success" type="submit" [disabled]="planificacionForm.pristine">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+
+                        <!-- <div class="text-left">
+              <a  routerLinkActive="router-link-active" class="btn btn-info">Regresar Atras</a>
+          </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="datatableview" *ngIf="isToList">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <hr class="d-block" />
+                    <h5><i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp;Vista de Planificaciones</h5>
+                    <hr class="d-block" />
+                    <table class="table table-striped table-responsive table-hover" [mfData]="planificaciones" #mf="mfDataTable" [mfRowsOnPage]="5">
+                        <thead>
+                            <tr>
+                                <th style="widows: auto; min-width:145px;">
+                                    <span><i class="fa fa-cog" aria-hidden="true"></i> Opciones</span>
+                                </th>
+                                <th style="width: auto">
+                                    <mfDefaultSorter by="codigo"><i class="fa fa-sort" aria-hidden="true"></i> Codigo</mfDefaultSorter>
+                                </th>
+                                <th style="width: auto">
+                                    <mfDefaultSorter by="nombre"><i class="fa fa-sort" aria-hidden="true"></i> Nombre
+                                    </mfDefaultSorter>
+                                </th>
+                                <th style="width: auto">
+                                    <mfDefaultSorter by="carreraId"><i class="fa fa-sort" aria-hidden="true"></i> Carrera
+                                    </mfDefaultSorter>
+                                </th>
+                                <th style="width: auto">
+                                    <mfDefaultSorter by="periodoID"><i class="fa fa-sort" aria-hidden="true"></i> Ingreso
+                                    </mfDefaultSorter>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let planificacion of mf.data">
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" (click)="addPlanificacion()"><i
+                      class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-outline-primary" (click)="updatePlanificacion(planificacion)"><i
+                      class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-outline-primary" (click)="onDeleted(planificacion)"><i
+                      class="fa fa-trash" aria-hidden="true"></i></button>
+                                </td>
+                                <td>{{ planificacion.codigo }}</td>
+                                <td>{{ planificacion.nombre }}</td>
+                                <td class="text-right"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" (click)="addPlanificacion()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                                </td>
+                                <td>
+                                    <div class="loading-container">
+                                        <div class="loading">
+                                            <ng-template #customLoadingTemplate>
+                                                <div class="custom-class">
+                                                    <h5>
+                                                        Cargando...
+                                                    </h5>
+                                                </div>
+                                            </ng-template>
+                                            <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

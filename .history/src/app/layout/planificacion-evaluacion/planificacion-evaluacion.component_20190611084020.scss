@@ -1,0 +1,93 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~/styles/bootstrap/bootstrap";
+@import "spinner";
+@import "utils";
+@import "rtl";
+@import "responsive";
+@import "variables";
+@media print {
+    .breadcrumb {}
+}
+
+.forms {
+    .form-row {}
+    .checkInRow {}
+    .labelGroup {
+        .alert {}
+    }
+    span.required {}
+    h3 {}
+    .help-block {}
+    .bottom {}
+    .back-button {
+        a {}
+    }
+    .social-buttons {
+        a {}
+    }
+    .form-group {
+        .btn {}
+    }
+    .buttons-row {
+        .btn {}
+    }
+    .btn-fb {}
+    .btn-fb:hover {}
+    .btn-tw {}
+    .btn-tw:hover {}
+    .form-check-input {}
+    .loading-container {
+        .custom-class {}
+    }
+}
+
+.status i {}
+
+.status i.activated {}
+
+.status i.desactivated {}
+
+.loading-container {}
+
+.loading {}
+
+.custom-class {}
+
+@media (min-width: 576px) {}
+
+
+/* Small devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+    .section {
+        p {}
+        ul {
+            li {}
+        }
+    }
+    .forms {
+        .back-button {}
+    }
+}
+
+
+/* Medium devices (desktops, 992px and up) */
+
+@media (min-width: 992px) {
+    .section {}
+    .forms {
+        .buttons-row {
+            .btn {}
+        }
+        #tab-documentos {
+            .card-body {}
+        }
+        h3 {}
+    }
+}
+
+
+/* Large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {}

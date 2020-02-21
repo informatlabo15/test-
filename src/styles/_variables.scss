@@ -1,0 +1,69 @@
+// @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i');
+
+
+// FONTS ///////////////////////////////
+
+$main-font:'Open Sans', sans-serif;
+$secondary-font:'Lato', sans-serif;
+
+
+$header-font: 'Open Sans', sans-serif;
+
+// COLORS //////////////////////////////
+
+$main-color: #255587;
+$secondary-color: #FAD223;
+$tertiary-color:#FCEF00;
+$backcolor1: #bac0cc;
+$backcolor2: #0f5688;
+$botton-color: #5b8f3f;
+$font-blue: #1b2e55;
+$hover-menu: #00BFFF;
+$divisor-color:#e5e5e5;
+
+$h1-small: 25px;
+$h1: 35px;
+
+$gray-color: #231f20;  
+$dark-blue: #051e35;
+
+$header-color: #231f20 ; 
+$search-color: #939597;
+$greyinternal-color:#e7e7e9;
+
+
+$hcolor:#0f5688;
+$hcolor2:#303030;
+
+// PROPERTIES //////////////////////////
+
+$rounded:true;
+$toggleclosebtn:false;
+$main-radius:7px;
+$main-padding:15px;
+
+.btn-primary{
+	background-color: $main-color;
+	&:hover{
+		background-color: tint($main-color,20%);
+	}
+}
+
+@mixin radius($value) {
+	border-radius:$value;
+	-moz-border-radius:$value;
+	-webkit-border-radius:$value;
+	-ms-border-radius:$value;
+}
+@mixin shadow($value){
+	-moz-box-shadow:$value;
+	-webkit-box-shadow:$value;
+	box-shadow:$value;
+}
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}

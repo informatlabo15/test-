@@ -1,0 +1,492 @@
+<div [@routerTransition] class="container">
+    <app-page-header [heading]="'Docentes'" [icon]="'fa fa-users'"></app-page-header>
+    <div class="forms  addForm" id="docenteForm" *ngIf="isToAdd || isToUpdate">
+        <div>
+            <div class="row">
+                <div class="col">
+                    <h3>
+                        <!--                     <i class="fa fa-id-card-o" aria-hidden="true"></i> Datos Generales del Docente -->
+                    </h3>
+                    <hr />
+                    <!-- star Form -->
+                    <form [formGroup]="docenteForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <div class="form-row">
+                            <div class="buttons-row">
+                                <button class="btn btn-success" type="submit" [disabled]="docenteForm.pristine">Guardar</button>
+                                <button type="button" class="btn btn-success" (click)="goBack()">Atras</button>
+                            </div>
+                        </div>
+                        <ngb-tabset>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle><b>Datos Generales</b></ng-template>
+                                <ng-template ngbTabContent>
+                                    <hr />
+
+                                    <!-- Star Row Estado -->
+                                    <div class="form-row">
+                                        <label class="form-check-label pl-1" for="checkboxConfirma">¿Es Docente Activo? &nbsp;&nbsp;</label>
+                                        <div class="">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="checkboxActivo" formControlName="estado" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- -->
+                                    <hr />
+                                    <!-- Star Row Identificacion -->
+
+                                    <div class="form-row">
+                                        <label class="labelGroup">Identificación (Cédula) <span class="required">*</span></label>
+                                        <div class="form-group col-md-6 col-lg-4">
+                                            <input type="text" formControlName="identificacion" class="form-control" id="textIdentificacion" mask="000-000000-0000S" placeholder="No de Cédula" [ngClass]="{ 'is-invalid': submitted && f.identificacion.errors }" />
+                                            <div *ngIf="submitted && f['identificacion'].errors" class="invalid-feedback">
+                                                <div *ngIf="f['identificacion'].errors.required">Por favor Digite Número de identificación</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-lg-4">
+                                            <input type="text" class="form-control" id="textCodigo" placeholder="Codigo de la Universidad" formControlName="codigo" />
+                                        </div>
+                                    </div>
+                                    <!-- End Row -->
+                                    <!-- Star Row Nombre y Apellidos -->
+                                    <div class="form-row">
+                                        <label class="labelGroup">Nombres y Apellidos<span class="required">*</span></label>
+                                        <div class="form-group col-md-6 col-lg-4">
+                                            <input type="text" class="form-control" id="textNombre" placeholder="Nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" formControlName="nombre" />
+                                            <div *ngIf="submitted && f['nombre'].errors" class="invalid-feedback">
+                                                <div *ngIf="f['nombre'].errors.required">Por favor Digite el Nombre</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6 col-lg-4">
+                                            <input type="text" class="form-control" id="textApellidos" placeholder="Apellidos" [ngClass]="{ 'is-invalid': submitted && f.apellido.errors }" formControlName="apellido" />
+                                            <div *ngIf="submitted && f['apellido'].errors" class="invalid-feedback">
+                                                <div *ngIf="f['apellido'].errors.required">Por favor Digite el Apellido</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Row -->
+
+                                    <!-- Star Row Fecha y Lugar de Nacimiento -->
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label class="labelGroup"><i class="fa fa-calendar" aria-hidden="true"></i> Fecha de Nacimiento<span class="required">*</span></label
+                      >
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="textFechaNacimiento"
+                        placeholder="Fecha de Nacimiento"
+                        [ngClass]="{ 'is-invalid': submitted && f.fechaNacimiento.errors }"
+                        formControlName="fechaNacimiento"
+                      />
+                      <div *ngIf="submitted && f['fechaNacimiento'].errors" class="invalid-feedback">
+                        <div *ngIf="f['fechaNacimiento'].errors.required">Por favor Seleccione la Fecha de Nacimiento</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4 ">
+                      <label class="labelGroup">Estado Civil</label>
+                                            <select class="custom-select" id="textEstadoCivil" formControlName="estadoCivil">
+                        <option value="" disabled>Seleccione una opción</option>
+                        <option value="Soltero">Soltero</option>
+                        <option value="Casado">Casado</option>
+                      </select>
+                                        </div>
+                                        <div class="form-group col-md-4 ">
+                                            <label class="labelGroup"><i class="fa fa-genderless" aria-hidden="true"></i> Sexo<span class="required">*</span></label
+                      >
+                      <select
+                        class="custom-select"
+                        id="textSexo"
+                        formControlName="sexo"
+                        [ngClass]="{ 'is-invalid': submitted && f.sexo.errors }"
+                      >
+                        <option value="" disabled>Seleccione una opción</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                      </select>
+                      <div *ngIf="submitted && f['sexo'].errors" class="invalid-feedback">
+                        <div *ngIf="f['sexo'].errors.required">Por favor Seleccione una opción</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Row -->
+
+                  <!-- Star Row  Dirección -->
+                  <div class="form-row">
+                    <label class="labelGroup"><i class="fa fa-address-book" aria-hidden="true"></i> Localidad / Dirección</label>
+                                            <div class="form-group col-md-4 ">
+                                                <input type="text" class="form-control" id="textDepartamento" placeholder="Departamento" formControlName="departamento" [ngClass]="{ 'is-invalid': submitted && f.departamento.errors }" />
+                                                <div *ngIf="submitted && f['departamento'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['departamento'].errors.required">Por favor Digite el Departamento</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" class="form-control" id="textMunicipio" placeholder="Municipio" formControlName="municipio" [ngClass]="{ 'is-invalid': submitted && f.municipio.errors }" />
+                                                <div *ngIf="submitted && f['municipio'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['municipio'].errors.required">Por favor Digite el Municipio</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <input type="text" class="form-control" id="textDireccion" placeholder="Dirección" formControlName="direccion" [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" />
+                                                <div *ngIf="submitted && f['direccion'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['direccion'].errors.required">Por favor Digite la Dirección</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+
+                                        <!-- Star Row  Teléfono / Email -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label class="labelGroup"><i class="fa fa-phone" aria-hidden="true"></i> Teléfono</label>
+                                                <input type="tel" class="form-control" id="textTelefono" placeholder="Teléfono" mask="0000-0000" formControlName="telefono" />
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="labelGroup"><i class="fa fa-mobile" aria-hidden="true"></i> Celular</label>
+                                                <input type="tel" class="form-control" id="textCelular" placeholder="Celular" mask="0000-0000" formControlName="celular" />
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="labelGroup"><i class="fa fa-envelope-open" aria-hidden="true"></i> Email</label>
+                                                <input type="text" class="form-control" id="textEmail" placeholder="Correo Electrónico" formControlName="email" />
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+
+                                        <!-- Star Row Hijos-->
+                                        <div class="form-row">
+                                            <label class="form-check-label col-md-2" for="checkboxConfirma">Tiene Hijos?</label>
+                                            <div class="col-md-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="checkboxHijo" data-md-icheck (change)="nhijosVisible($event)" formControlName="hijo" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row" *ngIf="isHijo">
+                                            <label class="col-md-3  col-form-label"><i class="fa fa-envelope-ope" aria-hidden="true"></i> Número de Hijos</label>
+                                            <div classs="col-md-3">
+                                                <input type="number" min="1" max="100" class="form-control" id="textNHijos" placeholder="Número de Hijos" formControlName="nHijo" />
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+
+                                        <!-- Star Row Puesto-->
+                                        <div class="form-row">
+                                            <label class="labelGroup"> Puesto de Trabajo</label>
+                                            <input type="text" class="form-control" id="textPuesto" placeholder="Puesto" formControlName="puesto" />
+                                        </div>
+                                        <!-- End Row -->
+
+                                        <!-- Star Row Puesto-->
+                                        <div class="form-row">
+                                            <label class="labelGroup">Usuario del Sistema</label>
+                                            <select class="custom-select" id="textUser" formControlName="userID">
+                      <option value="" disabled>Seleccione el Usuario <span>Opcional</span></option>
+                      <ng-container *ngFor="let user of users">
+                          <option value="{{user.userId }}">{{user.userName}} ,{{user.nombre}} {{user.apellidos}}  </option>
+                     </ng-container>
+                   </select>
+                                        </div>
+                                        <!-- End Row -->
+
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle><b>Referencias</b></ng-template>
+                                <ng-template ngbTabContent>
+                                    <hr />
+                                    <h3></h3>
+                                    <ng-container formGroupName="referencia" *ngIf="addingReferencia">
+                                        <!-- Star Row -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-8">
+                                                <label class="labelGroup">Nombres y Apellidos</label>
+                                                <input type="text" class="form-control" id="textNombreReferencia" placeholder="Nombre y Apellidos" formControlName="nombre" />
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <label class="labelGroup">Teléfono</label>
+                                                <input type="text" class="form-control" id="textTelefonoReferencia" placeholder="Teléfono" formControlName="telefono" mask="0000-0000" />
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-8">
+                                                <label class="labelGroup">Lugar de Trabajo</label>
+                                                <input type="text" class="form-control" id="textLugarTrabajoReferencia" placeholder="Lugar de Trabajo" formControlName="lugarTrabajo" />
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <label class="labelGroup">Puesto</label>
+                                                <input type="text" class="form-control" id="textPuesto" placeholder="Puesto" formControlName="puesto" />
+                                            </div>
+
+                                            <div class="form-group col-md-8">
+                                                <label class="labelGroup">Tipo de Referencia</label>
+                                                <select class="custom-select" id="textTipoReferencia" formControlName="tipo">
+                          <option value="" disabled>Seleccione una opción</option>
+                          <option value="0">Referencia Personal Actual</option>
+                          <option value="1">Referencia Laboral</option>
+                        </select>
+                                            </div>
+                                        </div>
+                                        <!-- End Row -->
+                                        <div class="form-row">
+                                            <div class="d-flex">
+                                                <div class="text-center pr-3">
+                                                    <button type="button" class="btn btn-sm btn-outline-success" (click)="addReferencia()">Agregar</button>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="button" class="btn btn-sm btn-outline-success" (click)="showReferenciaForm(false)">Atras</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="reference-table" *ngIf="!addingReferencia">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <hr class="d-block" />
+                                                    <h3><i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp;Referencias</h3>
+                                                    <hr class="d-block" />
+                                                    <table class="table table-striped table-responsive table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="widows: auto">
+                                                                    <span><i class="fa fa-cog" aria-hidden="true"></i> Opciones</span>
+                                                                </th>
+                                                                <th style="width: auto">
+                                                                    <span> Nombre</span>
+                                                                </th>
+                                                                <th style="width: auto">
+                                                                    <span> Teléfono</span>
+                                                                </th>
+                                                                <th style="width: auto">
+                                                                    <span> Lugar de Trabajo</span>
+                                                                </th>
+                                                                <th style="width: auto">
+                                                                    <span> Puesto</span>
+                                                                </th>
+                                                                <th style="width: auto">
+                                                                    <span> Referencia</span>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container formArrayName="docenteReferencias">
+                                                                <tr *ngFor="let ref of docenteReferencias.controls; let i = index" [formGroupName]="i">
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-outline-primary" (click)="updateReferencia(ref)">
+                                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
+                                                                        <button type="button" class="btn btn-outline-danger" (click)="removeReference(i)">
+                                      <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                                                    </td>
+                                                                    <td>{{ ref.get('nombre').value }}</td>
+                                                                    <td>{{ ref.get('telefono').value }}</td>
+                                                                    <td>{{ ref.get('lugarTrabajo').value }}</td>
+                                                                    <td class="">{{ ref.get('puesto').value }}</td>
+                                                                    <td *ngIf="ref.get('tipo').value">Referencia Laboral</td>
+                                                                    <td *ngIf="!ref.get('tipo').value">Referencia Personal Actual</td>
+                                                                </tr>
+                                                            </ng-container>
+                                                            <hr />
+                                                            <div class="col-auto">
+                                                                <div class="text-left success-button">
+                                                                    <button type="button" class="btn btn-outline-success" (click)="showReferenciaForm(true)">Agregar</button>
+                                                                </div>
+
+                                                            </div>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle><b>Documentos</b></ng-template>
+                                <ng-template ngbTabContent>
+                                    <hr />
+                                    <h3>Nombre del Documento</h3>
+                                    <ng-container formArrayName="docenteDocumentos">
+                                        <ng-container *ngFor="let docenteDocument of docenteDocumentos.controls; let i = index" [formGroupName]="i">
+                                            <!-- Star Row -->
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <input type="text" class="form-control" id="textDocumento" placeholder="Documento" formControlName="descripcion" disabled />
+                                                    <div class="invalid-tooltip">
+                                                        Por favor digite el Nombre del tutor
+                                                    </div>
+                                                </div>
+                                                <div class="form-group checkInRow col-md-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="textEntregado" formControlName="entregado" />
+                                                        <label class="form-check-label" for="textEntregado"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Row -->
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <b>Diplomas Obtenidos</b>
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <hr />
+                                    <ng-container formArrayName="docenteEstudios">
+                                        <div class="form-row">
+                                            <div class="col-1 text-center">
+                                                <label class="labelGroup">Operación</label>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label class="labelGroup">Descripción</label>
+                                            </div>
+                                            <div class="form-group  col-auto">
+                                                <label class="labelGroup">Obtenido en:</label>
+                                            </div>
+                                        </div>
+                                        <ng-container *ngFor="let estudio of docenteEstudios.controls; let i = index" [formGroupName]="i">
+                                            <!-- Star Row -->
+                                            <div class="form-row">
+                                                <div class="col-1 text-center">
+                                                    <div class="d-inline">
+                                                        <button type="button" class="btn btn-outline-danger" (click)="removeEstudio()">
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <input type="text" class="form-control" id="textDocenteEstudioDescripcion" placeholder="Título" formControlName="descripcion" />
+                                                </div>
+                                                <div class="form-group  col-auto">
+                                                    <input type="date" class="form-control" id="textDocenteEstudiosFecha" placeholder="Obtenido en:" formControlName="fecha" [value]="estudio.get('fecha').value | dateformat" />
+                                                </div>
+                                            </div>
+                                            <!-- End Row -->
+                                        </ng-container>
+                                        <hr />
+                                        <div class="col-auto">
+                                            <div class="text-left success-button">
+                                                <button type="button" class="btn btn-outline-success" (click)="addEstudio()">Agregar</button>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                        <div class="form-row">
+                            <div class="buttons-row">
+                                <button class="btn btn-success" type="submit" [disabled]="docenteForm.pristine">Guardar</button>
+                                <button type="button" class="btn btn-success" (click)="goBack()">Atras</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="datatableview" *ngIf="isToList">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <hr class="d-block" />
+                        <h5><i class="fa fa-list-alt" aria-hidden="true"></i> Lista de Docentes</h5>
+                        <hr class="d-block" />
+                        <div class="form-row align-items-center mb-2">
+                            <div class="col-auto">
+                                <label class="">Filtrar Resultados:</label>
+                            </div>
+                            <div class="col-11">
+                                <label class="sr-only" for="searchText">Busqueda</label>
+                                <input [(ngModel)]="searchText" class="form-control" id="searchText" placeholder="Busqueda por Nombre, Apellidos ó Cédula">
+                            </div>
+                        </div>
+                        <table class="table table-striped table-responsive table-hover" [mfData]="docentes" #mf="mfDataTable" [mfRowsOnPage]="50">
+                            <thead>
+                                <tr>
+                                    <th style="widows: auto; min-width:145px;">
+                                        <span><i class="fa fa-cog" aria-hidden="true"></i> Opciones</span>
+                                    </th>
+                                    <th style="width: auto">
+                                        <mfDefaultSorter by="nombre"><i class="fa fa-sort" aria-hidden="true"></i> Nombre</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: auto">
+                                        <mfDefaultSorter by="apellido"><i class="fa fa-sort" aria-hidden="true"></i> Apellido</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: auto">
+                                        <mfDefaultSorter by="identificacion"><i class="fa fa-sort" aria-hidden="true"></i> Identificacion</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: auto">
+                                        <mfDefaultSorter by="telefono"><i class="fa fa-sort" aria-hidden="true"></i> Telefono</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: auto">
+                                        <mfDefaultSorter by="email"><i class="fa fa-sort" aria-hidden="true"></i> Correo</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: auto">
+                                        <mfDefaultSorter by="user"><i class="fa fa-sort" aria-hidden="true"></i> Usuario</mfDefaultSorter>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let docente of mf.data | filter : {nombre: searchText, apellido:searchText,  identificacion: searchText};">
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary" (click)="addDocente()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                                        <button type="button" class="btn btn-outline-primary" (click)="updateDocente(docente)">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                                        <button type="button" class="btn btn-outline-primary" (click)="onDeleted(docente)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                                    </td>
+                                    <td>{{ docente.nombre }}</td>
+                                    <td>{{ docente.apellido }}</td>
+                                    <td>{{ docente.identificacion }}</td>
+                                    <td class="text-right">{{ docente.telefono }}</td>
+                                    <td>{{ docente.email }}</td>
+                                    <td>{{ docente.user.userName }}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary" (click)="addDocente()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                                    </td>
+                                    <td>
+                                        <div class="loading-container">
+                                            <div class="loading">
+                                                <ng-template #customLoadingTemplate>
+                                                    <div class="custom-class">
+                                                        <h5>
+                                                            Cargando...
+                                                        </h5>
+                                                    </div>
+                                                </ng-template>
+                                                <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <mfBootstrapPaginator [rowsOnPageSet]="[50, 100, 150]"></mfBootstrapPaginator>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

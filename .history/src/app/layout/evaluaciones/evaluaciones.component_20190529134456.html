@@ -1,0 +1,123 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Evaluaciones'" [icon]="'fa fa-tags'"></app-page-header>
+    <div class="forms  addForm" id="EvaluacionForm" *ngIf="isToAdd || isToUpdate">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <hr class="d-block" />
+                    <h3><i class="fa fa-id-card-o" aria-hidden="true"></i> Descripción</h3>
+                    <hr class="d-block" />
+                    <!-- star Form -->
+                    <form role="form" [formGroup]="evaluacionForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-book" aria-hidden="true"></i> Nombre</label>
+                                <input type="text" class="form-control" maxlength="50" id="textNombre" placeholder="Nombre" [ngClass]="{ 'is-invalid': submitted && e.nombre.errors }" formControlName="nombre" />
+                                <div *ngIf="submitted && e.nombre.errors" class="invalid-feedback">
+                                    <div *ngIf="e.nombre.errors.required">Por favor Digite el Nombre</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <label class="labelGroup"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Valor</label>
+                                <input type="number" class="form-control" maxlength="100" id="textValor" placeholder="Valor" [ngClass]="{ 'is-invalid': submitted && e.valor.errors }" formControlName="valor" />
+                                <div *ngIf="submitted && e.valor.errors" class="invalid-feedback">
+                                    <div *ngIf="e.valor.errors.required">Por favor Digite el Nombre</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-2 offset-md-1">
+                                <div class="text-center success-button">
+                                    <button type="button" class="btn btn-success" (click)="goBack()">Cancelar</button>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="text-center success-button">
+                                    <button class="btn btn-success" type="submit" [disabled]="evaluacionForm.pristine">Enviar Solicitud</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Row -->
+
+                        <!-- <div class="text-left">
+                <a  routerLinkActive="router-link-active" class="btn btn-info">Regresar Atras</a>
+            </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="datatableview" *ngIf="isToList">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <hr class="d-block" />
+                    <h5><i class="fa fa-list-alt" aria-hidden="true"></i> &nbsp;Vista de Evaluaciones</h5>
+                    <hr class="d-block" />
+                    <table class="table table-striped table-responsive table-hover" [mfData]="evaluaciones" #mf="mfDataTable" [mfRowsOnPage]="5">
+                        <thead>
+                            <tr>
+                                <th style="widows: auto; min-width:145px;">
+                                    <span><i class="fa fa-cog" aria-hidden="true"></i> Opciones</span>
+                                </th>
+                                <th style="width: auto">
+                                    <mfDefaultSorter by="nombre"><i class="fa fa-sort" aria-hidden="true"></i> Nombre</mfDefaultSorter>
+                                </th>
+                                <th style="width: auto">
+                                    <mfDefaultSorter by="valor"><i class="fa fa-sort" aria-hidden="true"></i> Valor</mfDefaultSorter>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let evaluacion of mf.data">
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" (click)="addEvaluacion()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-outline-primary" (click)="updateEvaluacion(evaluacion)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-outline-primary" (click)="onDeleted(evaluacion)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </td>
+                                <td>{{ evaluacion.nombre }}</td>
+                                <td>{{ evaluacion.valor }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" (click)="addEvaluacion()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                                </td>
+                                <td>
+                                    <div class="loading-container">
+                                        <div class="loading">
+                                            <ng-template #customLoadingTemplate>
+                                                <div class="custom-class">
+                                                    <h5>
+                                                        Cargando...
+                                                    </h5>
+                                                </div>
+                                            </ng-template>
+                                            <ngx-loading [show]="loading" [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

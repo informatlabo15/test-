@@ -1,0 +1,83 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Evaluación Estudiante'" [icon]="'fa fa-tags'"></app-page-header>
+    <div class="forms  addForm" id="PlanificacionDetalleForm" *ngIf="isToAdd || isToUpdate">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <form role="form" [formGroup]="planificacionEvaluacionForm" (ngSubmit)="onSubmit()" accept-charset="UTF-8" id="registerForm">
+                        <hr class="d-block" />
+                        <h3><i *ngIf="isAsignaturaSelected" class="fa fa-check" aria-hidden="true"></i> Selecciona una Asignatura
+                        </h3>
+                        <hr class="d-block" />
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-6">
+                                <select class="custom-select" id="textAsignaturaID" formControlName="asignaturaID" (change)="getPlanificacionEstudianteById($event)" [ngClass]="{ 'is-invalid': submitted && p.asignaturaID.errors }">
+                  <option value="" disabled>Seleccion la Asignatura</option>
+                  <ng-container *ngFor="let planificacion of planificaciones">
+                    <option value="{{ planificacion.id }}">{{ planificacion.asignatura.nombre  }} -
+                      {{planificacion.grupo.nombre}}</option>
+                  </ng-container>
+                </select>
+                                <div *ngIf="submitted && p.asignaturaID.errors" class="invalid-feedback">
+                                    <div *ngIf="p.asignaturaID.errors.required">Por favor Seleccione la Asignatura</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="d-block" />
+                        <h3><i class="fa fa-list" aria-hidden="true"></i> Lista de Estudiantes
+                        </h3>
+                        <hr class="d-block" />
+                        <div class="content-table">
+                            <div class="form-row" *ngIf="planificacionSelected" formArrayName="estudiantesControls">
+                                <div class="form-row form-header">
+                                    <div class="form-group col-12 col-lg-4">
+                                        <label class="labelGroup">Nombre</label>
+                                    </div>
+                                    <ng-container *ngFor="let evaluacion of estudiantesControls.controls[0].get('evaluacionEstudiante').controls">
+                                        <div class="col-lg-2">
+                                            <label class="labelGroup" text="evaluacion.evaluacionID">{{ evaluacion.controls[0].get('evalNombre').value }}</label>
+                                        </div>
+                                    </ng-container>
+                                    <div class="form-group col-auto">
+                                        <select class="custom-select " id="textAsignaturaID" (change)="addEvaluacionEstudianteById($event)">
+                                            <option value="" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i>Agregar Evaluación</option>
+                                            <ng-container *ngFor="let evaluacion of evaluaciones">
+                                                <option value="{{ evaluacion.id }}">{{ evaluacion.nombre  }}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+                                <ng-container *ngFor="let estudiante of estudiantesControls.controls; let j = index" [formGroupName]="j">
+                                    <div class="form-row form-body">
+                                        <div class="form-group  col-lg-4">
+                                            <input type="text" class="form-control" formControlName="nombre" readonly="true">
+
+                                        </div>
+                                        <ng-container formArrayName="evaluacionEstudiante">
+                                            <ng-container *ngIf="estudiante.get('evaluacionEstudiante')">
+                                                <ng-container *ngFor="let evaluacion of estudiante.get('evaluacionEstudiante').controls[0] ; let h = index" [formGroupName]="h">
+                                                    <div class="col-lg-2">
+                                                        <input type="text" class="form-control" formControlName="evalNombre" readonly="true">
+                                                    </div>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <div class="col-auto text-left success-button">
+
+                                        </div>
+                                        <!-- <ng-container *ngFor="let evaluacion of evaluaciones">
+                                            <div class="col-lg-2">
+                                                <input type="number" class="form-control" placeholder="" />
+                                            </div>
+                                        </ng-container> -->
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

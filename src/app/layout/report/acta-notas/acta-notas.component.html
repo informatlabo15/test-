@@ -1,0 +1,231 @@
+<div class="form" [formGroup]="planificacionEvaluacionForm">
+  <section class="filter">
+    <div class="">
+      <hr class="d-block" />
+      <h5><i class="fa fa-id-card-o" aria-hidden="true"></i> Tipo de Evaluación</h5>
+      <select class="custom-select" id="textEvaluacionID" formControlName="evaluacionID"
+        [ngClass]="{ 'is-invalid': submitted && p.evaluacionID.errors }">
+        <option value="" disabled>Seleccion el tipo de Evaluación</option>
+        <option value="0">NOTA FINAL</option>
+        <ng-container *ngFor="let evaluacion of evaluaciones">
+            <ng-container *ngIf="evaluacion.acumulado !== true">  
+              <option value="{{ evaluacion.nombre }}">{{ evaluacion.nombre  }} </option>
+          </ng-container>
+        </ng-container>
+      </select>
+      <hr class="d-block" />
+      <h5><i class="fa fa-id-card-o" aria-hidden="true"></i> Seleccióne la Planificación</h5>
+      <select class="custom-select" id="textplanificacionDetalleID" formControlName="planificacionDetalleID"
+        (change)="getPlanificacionDocenteByPlanificacion($event)"
+        (click)="getPlanificacionDocenteByPlanificacion($event)"
+        [ngClass]="{ 'is-invalid': submitted && p.planificacionDetalleID.errors }">
+        <option value="" disabled>Seleccion un Plan</option>
+        <ng-container *ngFor="let planificacion of planificaciones">
+          <option value="{{ planificacion.id }}">{{ planificacion['asignatura'].nombre  }} -
+            {{planificacion['grupo'].nombre}}</option>
+        </ng-container>
+      </select>
+    </div>
+  </section>
+  <ng-container *ngIf="p.evaluacionID.value === '0'; else templateNoAcumum_header">
+    <app-header-report [heading]="'Acta de Notas Cuatrimestral'" [subHeading]="" *ngIf="planificacionSelected">
+    </app-header-report>
+  </ng-container>
+  <ng-template #templateNoAcumum_header>
+      <app-header-report [heading]="'Acta de Notas de '+ p.evaluacionID.value" [subHeading]="" *ngIf="planificacionSelected">
+      </app-header-report>
+  </ng-template>
+  
+  
+ 
+  <div class="content-body-report" *ngIf="planificacionSelected">
+    <div class="buttons-fixed d-print-none">
+      <button class="btn btn-success float-right" type="button" (click)="onSubmit()">
+        <i class="fa fa-print fa-2x" aria-hidden="true"></i> Imprimir
+      </button>
+    </div>
+    <!--  Datos Generales -->
+    <div class="container">
+      <!-- Periodo  -->
+      <div class="row  py-1 justify-content-end">
+        <div class="col-auto">
+          <div class="info-general">
+            <label class="font-weight-bold">PERIODO:</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general w-100 underline">
+            <span class="">{{planificacionSelected[0].planificacion.nombre}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- End Periodo  -->
+      <!--  Carrera  -->
+      <div class="row py-1">
+        <div class="col-auto">
+          <div class="infor-general">
+            <label class="font-weight-bold">Carrera:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="infor-general underline">
+            <label>{{ planificacionSelected[0].grupo.carrera.nombre }}</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general">
+            <label class="font-weight-bold">Grupo:</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general underline">
+            <label>{{ planificacionSelected[0].grupo.periodo.nombre }}</label>
+          </div>
+        </div>
+      </div>
+      <!-- End Carrera  -->
+      <!--  Docente  -->
+      <div class="row py-1">
+        <div class="col-auto">
+          <div class="infor-general">
+            <label class="font-weight-bold">Docente:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="infor-general underline">
+            <label>{{ planificacionSelected[0].docente.nombre }}</label>
+          </div>
+        </div>
+      </div>
+      <!-- End Docente  -->
+      <!-- Asignatura  -->
+      <div class="row py-1">
+        <div class="col-auto">
+          <div class="infor-general">
+            <label class="font-weight-bold">Asignatura:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="infor-general w-100 underline">
+            <label>{{ planificacionSelected[0].asignatura.nombre | uppercase}}</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general">
+            <label class="font-weight-bold">Código:</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general w-100 underline">
+            <label>{{ planificacionSelected[0].asignatura.codigo }}</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general">
+            <label class="font-weight-bold">Crédito:</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="infor-general w-100 underline">
+            <label>{{ planificacionSelected[0].asignatura.creditos }}</label>
+          </div>
+        </div>
+      </div>
+      <!--End  Asignatura  -->
+    </div>
+    <div class="container">
+      <section class="items">
+        <div class="table-responsive-lg">
+          <table class="table table-reponsive-lg table-bordered">
+            <tbody>
+              <!-- Solo se imprime en la primera fila -->
+              <tr class="header">
+                <td style="text-align:center;">N°</td>
+                <td style ="">N° Carnet</td>
+                <td style ="">Nombre y Apellidos</td>
+                <ng-container *ngFor="let eval of orderBy.transform(evaluaciones, 'orden')">
+                   <ng-container *ngIf="eval.acumulado === true && p.evaluacionID.value === '0';else sinoNotaAcumulada">
+                      <td style="text-align:center;">{{eval.nombre}}</td>
+                   </ng-container>
+                   <ng-template #sinoNotaAcumulada>
+                     <ng-container *ngIf="p.evaluacionID.value === eval.nombre">
+                       <td style="text-align:center;">{{eval.nombre}}</td>
+                    </ng-container>
+                   </ng-template>
+                   
+                </ng-container>
+                <td style="text-align:center;" *ngIf="p.evaluacionID.value === '0'">Nota Final</td>
+                <td style="text-align:center;" *ngIf="p.evaluacionID.value !== '0'">En Letras</td>
+              </tr>
+              <tr class="row-content" *ngFor="let estudiante of orderBy.transform(planificacionEstudianteSelected, 'estudiante.nombreCompleto'); let j = index;">
+                  <ng-container *ngIf="estudiante['activo'] === true">
+                      <td style="vertical-align:top;text-align:center;">
+                        {{ j + 1   }}
+                      </td>
+                      <td>
+                        {{ estudiante['estudiante'].carnet | uppercase }} 
+                      </td>
+                      <td >
+                        {{ estudiante['estudiante'].nombreCompleto | titlecase }} 
+                      </td>
+ 
+                      <ng-container *ngFor="let evaluacion of orderBy.transform(evaluaciones, 'orden')">
+                        <ng-container *ngIf="evaluacion.acumulado === true && p.evaluacionID.value === '0';else sinoNotaAcumulada_">
+                            <td style="vertical-align:top;text-align:center;">
+                              <ng-container *ngFor="let eval of estudiante['estudiante'].estudianteEvaluaciones; let k = index;">
+                                <ng-container *ngIf="eval.evaluacionID === evaluacion.id">
+                                    {{ eval.valor }}
+                                </ng-container>                  
+                              </ng-container>
+                            </td>
+                        </ng-container>
+                        <ng-template #sinoNotaAcumulada_>
+                            <ng-container *ngIf="p.evaluacionID.value === evaluacion.nombre">
+                              
+                                  <ng-container *ngFor="let eval of estudiante['estudiante'].estudianteEvaluaciones; let k = index;">
+                                    <ng-container *ngIf="eval.evaluacionID === evaluacion.id">
+                                       <td style="vertical-align:top;text-align:center;">
+                                        {{ eval.valor }}
+                                      </td>
+                                      <td style="vertical-align:top;text-align:center;">
+                                          {{  numeroALetras(eval.valor) }}
+                                        </td>
+                                    </ng-container>                  
+                                  </ng-container>
+                           
+                            </ng-container>
+                          </ng-template>
+                      </ng-container>   
+
+                      <td style="vertical-align:top;text-align:center;" *ngIf="p.evaluacionID.value === '0'">
+                        <ng-container>{{ getTotal(estudiante['estudiante'].id) }}</ng-container>
+                      </td>
+
+                  </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <div class="infor-general  underline">
+                    <label></label>
+                </div>
+                <p class="text-center">Firma del Docente</p>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-4">
+                <div class="infor-general  underline">
+                    <label></label>
+                </div>
+                <p class="text-center">Registro Académico</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <label class="font-weight-bold">Fecha: {{ fecha | date:'MM/dd/yyyy' }}</label>
+          </div>
+        </div>
+      </section>
+    </div>
+</div>
