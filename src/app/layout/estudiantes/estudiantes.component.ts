@@ -546,21 +546,21 @@ export class EstudiantesComponent implements OnInit {
     const matriculasFormArray = this.fb.array(matriculas);
     this.estudianteForm.setControl('matriculas', matriculasFormArray);
 
-    // this.userService.getUserById(estudiante.userID).subscribe((user: User) => {
-    //   this.user = user;
-    //   var pnombre: string = user.userName.substr(0, 2);
-    //   var papellido: string = user.userName.substr(2).toUpperCase();
-    //   var fechanac = new Date(estudiante.fechaNacimiento);
-    //   var fechaYear =  fechanac.getFullYear();
-    //   var pass =  (pnombre + papellido + fechaYear);
-    //   this.u.patchValue({
-    //     userName:  user.userName,
-    //     email: user.email,
-    //     passwordDefault: user.verificado === false ? pass : '',
-    //     fechaAlta: this.date,
-    //     activo: user.activo
-    //   });
-    // });
+    this.userService.getUserById(estudiante.userID).subscribe((user: User) => {
+      this.user = user;
+      var pnombre: string = user.userName.substr(0, 2);
+      var papellido: string = user.userName.substr(2).toUpperCase();
+      var fechanac = new Date(estudiante.fechaNacimiento);
+      var fechaYear =  fechanac.getFullYear();
+      var pass =  (pnombre + papellido + fechaYear);
+      this.u.patchValue({
+        userName:  user.userName,
+        email: user.email,
+        passwordDefault: user.verificado === false ? pass : '',
+        fechaAlta: this.date,
+        activo: user.activo
+      });
+    });
 
     this.estudianteForm.patchValue({
       id: estudiante.id,
