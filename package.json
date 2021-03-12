@@ -33,7 +33,7 @@
     "core-js": "2.5.7",
     "font-awesome": "4.7.0",
     "html2canvas": "^1.0.0-rc.3",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "ng-alertify": "^1.0.2",
     "ng2-charts": "1.6.0",
     "ngx-loading": "^3.0.1",
